@@ -115,6 +115,6 @@ VogueVault is a streamlined stock management web application tailored for retail
 ## Contact
 
 For any queries or contributions, please reach out:
-- **Email**: choudharyutsav2@gmail.com
+- **Email**: raunakswain.19402@gmail.com
 - **GitHub Issues**: Open an issue in the repository.
 
