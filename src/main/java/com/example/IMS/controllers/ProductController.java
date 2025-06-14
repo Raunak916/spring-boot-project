@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.IMS.entities.Product;
+import com.example.IMS.entities.User;
+import com.example.IMS.repositories.UserRepository;
+
 import com.example.IMS.services.ProductService;
 
 import java.util.List;
@@ -15,10 +18,22 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UserRepository userRepository;
     // View : User Page
     @GetMapping("/userPage")
-    public String openUserPage(@RequestParam(value = "category", required = false) String category, Model model) {
-    	List<String> categories = productService.getAllCategories();
+    public String openUserPage(@RequestParam(value = "category", required = false) String category,
+                                                               @RequestParam("userId") Long userId,
+                                                                                    Model model) {
+        User user = userRepository.findById(userId.intValue()).orElse(null);
+        if (user == null) {
+            model.addAttribute("errorMsg", "User not found!");
+            return "redirect:/login.html"; // Redirect to login page if user not found
+        }
+        model.addAttribute("user", user); // Add user to the model for display in the view
+
+        // Fetch all categories and products
+        List<String> categories = productService.getAllCategories();
         List<Product> products;
 
         // Filter products if a category is selected

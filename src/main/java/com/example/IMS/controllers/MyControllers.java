@@ -47,7 +47,7 @@ public class MyControllers {
             if (validUser.getRole().equalsIgnoreCase("ADMIN")) {
                 return "redirect:/adminPage"; // Redirect to admin page
             }
-            return "redirect:/userPage"; // Redirect to inventory page for normal users
+            return "redirect:/userPage?userId=" + validUser.getId(); // Redirect to inventory page for normal users
         } else {
             model.addAttribute("errorMsg", "Email ID and password didn't match!!");
             return "login";

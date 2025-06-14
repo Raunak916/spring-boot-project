@@ -256,15 +256,23 @@
             </th>
             <th>Price</th>
             <th>Stock</th>
+            </th>Add to Cart</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="products : ${products}">
-            <td th:text="${products.productId}"></td>
-            <td th:text="${products.productName}"></td>
-            <td th:text="${products.category}"></td>
-            <td th:text="${products.price}"></td>
-            <td th:text="${products.stock}"></td>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.category}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.stock}"></td>
+            <td>
+                <form th:action="@{/cart/add}" method="post">
+                    <input type="hidden" name="productId" th:value="${product.id}"/>
+                    <input type="hidden" name="userId" th:value="${user.id}"/>
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -276,6 +284,13 @@
         const selectedCategory = document.getElementById('categoryFilter1').value;
         const url = new URL(window.location.href);
         url.searchParams.set('category', selectedCategory);
+
+         // ✅ Make sure userId stays in the URL
+    if (!url.searchParams.get('userId')) {
+        url.searchParams.set('userId', /*[[${user.id}]]*/ ''); // Thymeleaf will inject user ID
+    }
+    //http://localhost:8080/userPage?category=Kurti&userId=5
+
         window.location.href = url.toString();
     }
 
