@@ -92,6 +92,20 @@ public class CartController {
         return "cart"; // loads cart.html
 }
 
+    @GetMapping("/payment-success")
+    public String paymentSuccess(@RequestParam("userId") Integer userId, Model model) {
+        model.addAttribute("userId", userId);
+        return "paymentSuccess";
+    }
+
+
+
+
+@GetMapping("/test-success")
+public String testSuccess() {
+    return "paymentSuccess";
+}
+
 
 }
 
